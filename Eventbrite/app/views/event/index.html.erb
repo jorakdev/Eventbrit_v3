@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+      <p>bonjour : <a href="<%=user_path(current_user.id)%>"><%= current_user.email %></a></p>
+      <h1>Ici les events</h1>
+      <%@all_e.each do |e|%><br>
+        <a href="<%=event_path(e.id)%>"><%=e.title%></a>
+        <%=e.start_date%>
+      <%end%><br><br>
+
+      <%= link_to "Créer un Evenement", new_event_path%><br>
+      <%= link_to "Edit email / password", edit_user_registration_path %><br>
+      <%=link_to "Sign out", destroy_user_session_path, method: :delete %><br>
+
+  </body>
+</html>

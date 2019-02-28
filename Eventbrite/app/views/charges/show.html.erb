@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+
+    <h1>affichage d'un event que tu voudrais bien y participer</h1>
+        <%@all_e.each do |e|%>
+
+            <%if e.id==(@event_id)%>
+            <%@all_u.each do |u|%>
+              <%if u.id == e.user_id%>
+                c'est <%=u.first_name%> qui a créer : <br>
+                <b>titre de l'event :</b>
+                <%=e.title%><br>
+                <b>Description de l'event :</b>
+                <%=e.description%><br>
+                <b>Localisation de l'event :</b>
+                <%=e.location%><br>
+                <b>Date de début :</b>
+                <%=e.start_date%><br>
+                <b>Durée :</b>
+                <%=e.duration%>
+                <b>minutes</b><br>
+                <b>Prix :</b>
+                <%=@price = e.price%><br>
+              <%end%>
+        <%end%>
+        <%if e.user_id == current_user.id%>
+        <!--si current user est le createur de l'event on affiche pas payer-->
+        <b><p>tu ne peux pas participer puisque tu en est l'auteur</p></b>
+        <%else%><br>
+          <!---->
+          <%= form_tag charges_path do %>
+            <article>
+              <% if flash[:error].present? %>
+                <div id="error_explanation">
+                  <p><%= flash[:error] %></p>
+                </div>
+              <% end %>
+              </article>
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                    data-description="payed an envent"
+                    data-amount=<%=@price%>
+                    data-event-id=<%=@event_id%>
+                    data-locale="auto">
+            </script>
+          <%end%>
+
+        <%end%>
+     <%end%>
+   <%end%><br>
+
+
+    <%=link_to "Back to home", root_path%><br>
+  </body>
+</html>

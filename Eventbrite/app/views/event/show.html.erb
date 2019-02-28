@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <%=current_user.first_name%>  id :<%=current_user.id%><br>
+    event_id :<%=@event_id%>
+    <h1>affichage d'un event precis</h1>
+        <%@all_e.each do |e|%>
+          <%if e.id==(@event_id)%>
+            <%@all_u.each do |u|%>
+              <%if u.id == e.user_id%>
+                c'est <%=u.first_name%> qui a créer : <br>
+                <b>titre de l'event :</b>
+                <%=e.title%><br>
+                <b>Description de l'event :</b>
+                <%=e.description%><br>
+                <b>Localisation de l'event :</b>
+                <%=e.location%><br>
+                <b>Date de début :</b>
+                <%=e.start_date%><br>
+                <b>Durée :</b>
+                <%=e.duration%>
+                <b>minutes</b><br>
+                <b>Prix :</b>
+                <%=@price = e.price%><br>
+              <%end%>
+            <%end%>
+          <%end%>
+        <%end%>
+        <br>
+
+
+    <a href="<%=charge_url(@event_id)%>">Participer</a><br>
+    <%=link_to "Sign out", destroy_user_session_path, method: :delete %><br>
+    <%=link_to "Back", event_index_path%><br>
+  </body>
+</html>
